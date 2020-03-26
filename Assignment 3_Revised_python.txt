@@ -1,0 +1,83 @@
+#!/usr/bin/python3
+import string
+import linecache
+
+file='C://Users//linuas//Desktop//citeseer//citeseer.content';
+file2='C://Users//linuas//Desktop//citeseer//citeseer.cites';
+with open(file,'r') as f:
+    lines=len(f.readlines());
+    str2=linecache.getlines(file);
+
+with open(file2,'r') as f2:
+    lines2=len(f2.readlines());
+    str=linecache.getlines(file2);
+
+lists = [[] for i in range(lines)]
+
+for i in range(lines):
+    a=str2[i].find('\t')
+    b=str2[i].rfind('\t')
+    str3=str2[i][0:a]
+    str4=str2[i][b+1:len(str2[i])-1]
+    str5=str2[i][a+1:b]
+    str5=str5.replace('\t','')
+    lists[i]=str3,str4,str5
+
+linenum=0
+canum_ag=canum_ai=canum_db=canum_ir=canum_ml=canum_hc=0
+for i in range(lines2):
+    a=str[i].find('\t')
+    str6=str[i][0:a]
+    str7=str[i][a+1:len(str[i])-1]
+    num1=num2=-1
+    for j in range(lines):
+        if str6==lists[j][0]:
+            num1=j
+        if str7==lists[j][0]:
+            num2=j
+    if num1!=-1 and num2!=-1:
+        linenum+=1
+        if lists[num1][1]=='Agents' and lists[num2][1]=='Agents': 
+            canum_ag+=1
+        if lists[num1][1]=='AI' and lists[num2][1]=='AI':
+            canum_ai+=1
+        if lists[num1][1]=='DB' and lists[num2][1]=='DB':
+            canum_db+=1
+        if lists[num1][1]=='IR' and lists[num2][1]=='IR':
+            canum_ir+=1
+        if lists[num1][1]=='ML' and lists[num2][1]=='ML':
+            canum_ml+=1
+        if lists[num1][1]=='HCI' and lists[num2][1]=='HCI':
+            canum_hc+=1
+
+num_ag=num_ai=num_db=num_ir=num_ml=num_hc=0
+for i in range(lines):
+    if lists[i][1]=='Agents':
+        num_ag+=1
+    if lists[i][1]=='AI':
+        num_ai+=1
+    if lists[i][1]=='DB':
+        num_db+=1
+    if lists[i][1]=='IR':
+        num_ir+=1
+    if lists[i][1]=='ML':
+        num_ml+=1
+    if lists[i][1]=='HCI':
+        num_hc+=1
+
+print(lines)#节点数
+print("Ag类别节点：",num_ag)#类别节点数
+print("AI类别节点：",num_ai)
+print("DB类别节点：",num_db)
+print("IR类别节点：",num_ir)
+print("ML类别节点：",num_ml)
+print("HC类别节点：",num_hc)
+
+print(linenum)#边数
+print("Ag类别边：",canum_ag)#类别边数
+print("AI类别边：",canum_ai)
+print("DB类别边：",canum_db)
+print("IR类别边：",canum_ir)
+print("ML类别边：",canum_ml)
+print("HC类别边：",canum_hc)
+#print(lists[0])
